@@ -1,0 +1,8 @@
+services:
+   cece74.sharethis.listener:
+        class: cece74\nivoslider\event\listener
+        arguments:
+            - @config
+            - @template
+        tags:
+            - { name: event.listener }
