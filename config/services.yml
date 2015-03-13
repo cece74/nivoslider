@@ -2,7 +2,9 @@ services:
    cece74.sharethis.listener:
         class: cece74\nivoslider\event\listener
         arguments:
-            - @config
             - @template
+            - @dbal.conn
+            - %core.table_prefix%
+            - %core.root_path%
         tags:
             - { name: event.listener }
