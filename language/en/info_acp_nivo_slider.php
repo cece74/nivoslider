@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* Nivo Slider [Russian]
+* Nivo Slider [English]
 *
 * @package Nivo Slider
 * @copyright (c) 2013 phpBB Group
@@ -49,4 +49,7 @@ $lang = array_merge($lang, array(
 	'IMAGE_ONLY'						=> 'Illegal type: file is not an image.',
 	'DELETE_SUCCESS'					=> 'File %s was removed successfully.',
 	'DELETE_ERROR'						=> 'Failed to delete file.',
+	'URL'								=> 'Link',
+	'ILLEGAL_URL'						=> 'Wrong URL',
+	'NO_IMAGE'							=> 'File not selected.',
 ));
