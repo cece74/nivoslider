@@ -9,7 +9,7 @@
 
 namespace cece74\nivoslider\migrations;
 
-class nivo_slider_0_0_3 extends \phpbb\db\migration\migration
+class nivo_slider_1_0_3 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
@@ -55,7 +55,7 @@ class nivo_slider_0_0_3 extends \phpbb\db\migration\migration
 	{
 		return array(
 			// Current version
-			array('config.add', array('nivo_slider', '0.0.1')),
+			array('config.add', array('nivo_slider', '1.0.3')),
 			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_NIVO_SLIDER')),
 			array('module.add', array('acp', 'ACP_NIVO_SLIDER', array(
 				'module_basename'	=> '\cece74\nivoslider\acp\manage_module',

@@ -1,5 +1,5 @@
 services:
-   cece74.nivoslider.listener:
+   cece74.sharethis.listener:
         class: cece74\nivoslider\event\listener
         arguments:
             - @template

@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package phpBB Extension - Nav Links In Header
+* @package Nivo Slider
 * @copyright (c) 2015 Sheer
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -26,11 +26,12 @@ class manage_module
 		$upload_file = $request->file('upload_file');
 		$file_title	= request_var('file_title', '', true);
 		$file_alt	= request_var('file_alt', '', true);
+		$file_url	= request_var('file_url', '', true);
 
 		$action		= request_var('action', '');
 		$img_id		= request_var('id', 0);
 
-		$error = '';
+		$error = array();
 		$max_size = 500000;
 		$target_dir = '' . $phpbb_root_path . 'ext/cece74/nivoslider/styles/all/theme/images/';
 
@@ -38,29 +39,61 @@ class manage_module
 		{
 			$target_file = $target_dir . basename($upload_file['name']);
 			$file_type = pathinfo($target_file, PATHINFO_EXTENSION);
-			// Check if image file is a actual image or fake image
-			$check = getimagesize($upload_file['tmp_name']);
-			if($check == false)
+			if (!$upload_file['tmp_name'])
 			{
-				$error = $user->lang['IMAGE_ONLY'];
+				$error[] = $user->lang['NO_IMAGE'];
 			}
-			// Check if file already exists
-			if (file_exists($target_file))
+			else
 			{
-				$error = $user->lang['FILE_ALREADY_EXISTS'];
-			}
-			// Check file size
-			if ($upload_file['size'] > $max_size)
-			{
-				$error = $user->lang['FILE_TOO_LARGE'];
-			}
-			// Allow certain file formats
-			if($file_type != 'jpg' && $file_type != 'png' && $file_type != 'jpeg' && $file_type != 'gif')
-			{
-				$error = $user_lang['ILLEGAL_FILE_TYPE'];
+				// Check if image file is a actual image or fake image
+				$check = @getimagesize($upload_file['tmp_name']);
+				if($check == false)
+				{
+					$error[] = $user->lang['IMAGE_ONLY'];
+				}
+				// Check if file already exists
+				if (file_exists($target_file))
+				{
+					$error[] = $user->lang['FILE_ALREADY_EXISTS'];
+				}
+				// Check file size
+				if ($upload_file['size'] > $max_size)
+				{
+					$error[] = $user->lang['FILE_TOO_LARGE'];
+				}
+				// Allow certain file formats
+				if($file_type != 'jpg' && $file_type != 'png' && $file_type != 'jpeg' && $file_type != 'gif')
+				{
+					$error[] = $user->lang['ILLEGAL_FILE_TYPE'];
+				}
 			}
 
-			if(!$error)
+			// Need validate $file_url
+			if (!preg_match("/^(http|https):\/\/([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?\/?/Diu", $file_url, $matches))
+			{
+				$error[] = $user->lang['ILLEGAL_URL'];
+			}
+			else
+			{
+				$arr = parse_url($file_url);
+				$addr = explode('.', $arr['host']);
+				if (sizeof($addr) < 2)
+				{
+					$error[] = $user->lang['ILLEGAL_URL'];
+				}
+				else
+				{
+					foreach($addr as $part)
+					{
+						if (!$part)
+						{
+							$error[] = $user->lang['ILLEGAL_URL'];
+						}
+					}
+				}
+			}
+
+			if(!sizeof($error))
 			{
 				if (move_uploaded_file($upload_file['tmp_name'], $target_file))
 				{
@@ -74,6 +107,7 @@ class manage_module
 						'order_img'		=> $max,
 						'img_title'		=> $file_title,
 						'img_alt'		=> $file_alt,
+						'img_url'		=> $file_url,
 					);
 					$db->sql_query('INSERT INTO ' . SLIDER_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary));
 					meta_refresh(3, append_sid($this->u_action));
@@ -84,11 +118,6 @@ class manage_module
 					meta_refresh(3, append_sid($this->u_action));
 					trigger_error(sprintf($user->lang['UPLOAD_FILURE'], $upload_file['name']) . adm_back_link($this->u_action), E_USER_WARNING);
 				}
-			}
-			else
-			{
-				meta_refresh(3, append_sid($this->u_action));
-				trigger_error($error . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 		}
 
@@ -106,6 +135,7 @@ class manage_module
 				'FILE_NAME'		=> $row['file_name'],
 				'ALT'			=> $row['img_alt'],
 				'TITLE'			=> $row['img_title'],
+				'URL'			=> $row['img_url'],
 				'U_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;id=' . $row['id'] . '',
 				'U_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;id=' . $row['id'] . '',
 				'U_DELETE'		=> $this->u_action . '&amp;action=delete&amp;id=' . $row['id'] . '',
@@ -138,7 +168,6 @@ class manage_module
 					$file_name = $db->sql_fetchfield('file_name');
 					$db->sql_freeresult($result);
 
-					//print "Id $img_id $file_name<br />";
 					if (@unlink('' . $target_dir . '' . $file_name . ''))
 					{
 						$sql = 'DELETE
@@ -166,6 +195,8 @@ class manage_module
 
 		$template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
+			'FILE_URL'		=> $file_url,
+			'S_ERROR'		=> (sizeof($error)) ? implode('<br />', $error) : '',
 		));
 	}
 
