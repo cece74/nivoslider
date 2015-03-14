@@ -1,6 +1,6 @@
 <?php
 /**
-* @package System Info
+* @package Nivo Slider
 * @copyright (c) 2015 cece74 - http://www.microcosmoacquari.it/forum/
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 */
@@ -57,7 +57,7 @@ class listener implements EventSubscriberInterface
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->template->assign_block_vars('imgs', array(
-				'SLIDE_IMG'		=> '<img src="'. $this->phpbb_root_path .'ext/cece74/nivoslider/styles/all/theme/images/'. $row['file_name'] .'" alt="'. $row['img_alt'] .'" title="'. $row['img_title'] .'" />',
+				'SLIDE_IMG'		=> '<a href="'. $row['img_url'] .'"><img src="'. $this->phpbb_root_path .'ext/cece74/nivoslider/styles/all/theme/images/'. $row['file_name'] .'" alt="'. $row['img_alt'] .'" title="'. $row['img_title'] .'" /></a>',
 			));
 		}
 		$this->db->sql_freeresult($result);
