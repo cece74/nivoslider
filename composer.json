@@ -4,21 +4,20 @@
 	"description": "Add nivo slider for forum PHPBB 3.1.x",
 	"homepage": "http://phpbbextension.altervista.org/",
 	"version": "1.0.3",
-    "time": "2015-03-01",	
+    "time": "2015-03-01",
 	"license": "GPL-2.0",
 	"authors": [
-        {
-            "name": "Cece74",
-            "homepage": "http://www.microcosmoacquari.it/forum/",
-			"email": "forumacquariofilia@libero.it",
-            "role": "Extension Developer"
-        },
 		{
-			"name": "пхпBBGuRu",
-			"homepage": "http://www.phpbbguru.net/",
+			"name": "Cece74",
+			"email": "forumacquariofilia@libero.it",
+			"homepage": "http://www.microcosmoacquari.it/forum/",
 			"role": "Developer"
-		}
-	],
+		},
+		{
+			"name": "Sheer",
+			"homepage": "http://www.phpbbguru.net/",
+			"role": "Support Team"
+		}],
 	"require": {
 		"php": ">=5.3.3",
 		"composer/installers": "~1.0"
@@ -31,7 +30,7 @@
         "version-check": {
             "host": "http://phpbbextension.altervista.org/",
             "directory": "/version/",
-            "filename": "composer.json"			
+            "filename": "composer.json"
 		}
 	}
 }
