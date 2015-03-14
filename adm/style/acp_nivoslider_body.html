@@ -14,6 +14,7 @@
 				<th>{L_FILE_NAME}</th>
 				<th>{L_ALT}</th>
 				<th>{L_TITLE}</th>
+				<th>{L_URL}</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
@@ -24,6 +25,7 @@
 				<td>{images.FILE_NAME}</td>
 				<td>{images.ALT}</td>
 				<td>{images.TITLE}</td>
+				<td>{images.URL}</td>
 				<td class="actions">
 					<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
 					<span class="up"><a href="{images.U_MOVE_UP}" data-ajax="row_up">{ICON_MOVE_UP}</a></span>
@@ -41,6 +43,7 @@
 </form>
 <form action="{U_ACTION}" method="post" enctype="multipart/form-data">
 	<fieldset>
+	<!-- IF S_ERROR --><div class="errorbox"><p>{S_ERROR}</p></div><!-- ENDIF -->
 		<legend>{L_UPLOAD}</legend>
 		<dl>
 			<dt><label for="file_title">TITLE:</label></dt>
@@ -49,6 +52,10 @@
 		<dl>
 			<dt><label for="file_alt">ALT:</label></dt>
 			<dd><input type="text" name="file_alt" id="file_alt" class="inputbox autowidth" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="file_url">{L_URL}:</label></dt>
+			<dd><input id="file_url" size="60" maxlength="255" name="file_url" value="{FILE_URL}" type="text"></dd>
 		</dl>
 		<dl>
 			<dt><label for="upload_file">{L_SELECT_FILE}:</label></dt>
