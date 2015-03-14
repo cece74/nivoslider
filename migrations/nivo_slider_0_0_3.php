@@ -9,7 +9,7 @@
 
 namespace cece74\nivoslider\migrations;
 
-class nivo_slider_0_0_1 extends \phpbb\db\migration\migration
+class nivo_slider_0_0_3 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
