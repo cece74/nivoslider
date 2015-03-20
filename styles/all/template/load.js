@@ -1,3 +1,3 @@
     $(window).load(function() {
-$jQ('#slider').nivoSlider();
+        $('#slider').nivoSlider();
     });
