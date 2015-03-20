@@ -27,3 +27,4 @@ class manage_info
 		);
 	}
 }
+
