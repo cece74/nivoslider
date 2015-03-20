@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Add nivo slider for forum PHPBB 3.1.x",
 	"homepage": "http://phpbbextension.altervista.org/",
-	"version": "1.0.3",
+	"version": "1.0.6",
     "time": "2015-03-01",
 	"license": "GPL-2.0",
 	"authors": [
